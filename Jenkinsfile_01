@@ -15,11 +15,12 @@ pipeline {
         stage('build'){
             steps {  
 //                sh "./mvnw package" 
-                sh "mvn spring-boot:run -Dspring-boot.run.profiles=mysql"
+                sh "./mvnw package"
            }
         }
           stage('docker build'){
             steps {
+                  sh 'cd Docker'
                   sh 'docker image build . -t tsv1982/petclinic_01:${DOCKER_VERSION_TAG} -t tsv1982/petclinic_01:latest'
             }
         }
