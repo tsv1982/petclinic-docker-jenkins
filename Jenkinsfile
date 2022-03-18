@@ -3,6 +3,7 @@ pipeline {
     
     environment {
         DOCKER_VERSION_TAG = getVersion()
+        AWS_DEFAULT_REGION="eu-central-1"
 
     }
 
