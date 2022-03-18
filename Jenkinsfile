@@ -44,6 +44,7 @@ pipeline {
                      --image-id ami-0d527b8c289b4af7f\
                      --subnet-id subnet-094e9061064fd2825 \
                      --instance-type t2.micro\
+                     --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=petclinic_instance}]"\
                      --security-group-ids sg-0eb64ef8922a0a3bd\
                      --associate-public-ip-address \
                      --user-data file://script.sh'
