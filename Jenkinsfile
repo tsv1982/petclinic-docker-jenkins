@@ -36,6 +36,19 @@ pipeline {
                  sh 'docker push tsv1982/petclinic:latest'
             }
         }
+         stage('deploy on EC2') {
+            steps {
+                withCredentials([string(credentialsId: 'Access_key_ID', variable: 'AWS_ACCESS_KEY_ID'), string(credentialsId: 'Secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+                  sh 'aws ec2 run-instances\
+                     --image-id ami-0d527b8c289b4af7f\
+                     --subnet-id subnet-094e9061064fd2825 \
+                     --instance-type t2.micro\
+                     --security-group-ids sg-0eb64ef8922a0a3bd\
+                     --associate-public-ip-address \
+                     --user-data file://script.sh'
+                }
+           }
+        }
         
     }
    
