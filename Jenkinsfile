@@ -30,14 +30,14 @@ pipeline {
                  }
                  sh 'docker push tsv1982/petclinic:${DOCKER_VERSION_TAG}'
             }
-        stage('Docker push with latest')
+        }
+        stage('Docker push with latest'){
             steps {
                  sh 'docker push tsv1982/petclinic:latest'
             }
         }
         
     }
-    
    
 }
 
