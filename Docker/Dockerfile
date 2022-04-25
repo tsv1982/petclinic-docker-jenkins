@@ -6,4 +6,5 @@ RUN apt-get update -y && \
 WORKDIR /home/petclinic/target/
 COPY target /home/petclinic/target/
 EXPOSE 8080
-CMD [ "mvn","spring-boot:run","-Dspring-boot.run.profiles=mysql" ]
+#CMD [ "mvn","spring-boot:run","-Dspring-boot.run.profiles=mysql" ]
+ENTRYPOINT ["java","-jar","/app.jar"]
