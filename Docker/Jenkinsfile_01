@@ -15,7 +15,7 @@ pipeline {
         stage('build'){
             steps {  
 //                sh "./mvnw package" 
-                sh "./mvn -B -Dspring-boot.run.profiles=mysql -DskipTests clean package"
+                sh "mvn -B -Dspring-boot.run.profiles=mysql -DskipTests clean package"
            }
         }
           stage('docker build'){
