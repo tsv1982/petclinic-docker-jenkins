@@ -40,14 +40,15 @@ pipeline {
          stage('deploy on EC2') {
             steps {
                 withCredentials([string(credentialsId: 'Access_key_ID', variable: 'AWS_ACCESS_KEY_ID'), string(credentialsId: 'Secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-                  sh 'aws ec2 run-instances\
-                     --image-id ami-0d527b8c289b4af7f\
-                     --subnet-id subnet-0770126826d700875 \
-                     --instance-type t2.micro\
-                     --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=petclinic_instance}]"\
-                     --security-group-ids sg-08e5c6f44bbe5aa6a\
-                     --associate-public-ip-address \
-                     --user-data file://script.sh'
+  //                sh 'aws ec2 run-instances\
+  //                   --image-id ami-0d527b8c289b4af7f\
+  //                   --subnet-id subnet-0770126826d700875 \
+  //                   --instance-type t2.micro\
+  //                   --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=petclinic_instance}]"\
+  //                   --security-group-ids sg-08e5c6f44bbe5aa6a\
+  //                   --associate-public-ip-address \
+  //                   --user-data file://script.sh'
+                    sh "aws ec2 describe-instances | grep PublicIpAddress | grep -o -P "\d+\.\d+\.\d+\.\d+" | grep -v '^10\.'"
                 }
            }
         }
