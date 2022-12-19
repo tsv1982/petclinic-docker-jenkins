@@ -7,4 +7,4 @@ WORKDIR /home/petclinic/target/
 COPY target /home/petclinic/target/
 EXPOSE 8080
 #CMD [ "mvn","spring-boot:run","-Dspring-boot.run.profiles=mysql" ]
-ENTRYPOINT ["java","-jar","*spring-petclinic-2.6.0-SNAPSHOT.jar"]
+ENTRYPOINT ["java","-jar","spring-petclinic-2.6.0-SNAPSHOT.jar"]
