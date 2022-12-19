@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 ENV JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
 RUN apt-get update -y && \
-    sudo apt install default-jdk -y && \
+    apt install default-jdk -y && \
     apt-get install maven -y
 WORKDIR /home/petclinic/target/
 COPY target /home/petclinic/target/
