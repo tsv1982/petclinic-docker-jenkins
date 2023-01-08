@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+    
+    environment {
+        DOCKER_VERSION_TAG = getVersion()
+
+    }
+
+    stages {
+        stage('Hello') {
+            steps {
+                git branch: 'main', credentialsId: 'git_ssh', url: 'git@github.com:tsv1982/petclinic-docker-jenkins.git'
+            }
+        }
+        stage('build'){
+            steps {  
+                sh "./mvnw package" 
+//                sh "mvn -B -Dspring-boot.run.profiles=mysql -DskipTests clean package"
+           }
+        }
+          stage('docker build'){
+            steps {
+                  sh 'docker image build . -t tsv1982/petclinic_01:${DOCKER_VERSION_TAG} -t tsv1982/petclinic_01:latest'
+                  
+            }
+        }
+        stage('ecs update'){
+            steps {
+               sh 'aws ecs update-service --cluster tsv-Cluster --service tsv_project-Service --task-definition petclinic:8 --force-new-deployment'
+                  
+            }
+        }
+        
+    }
+    
+   
+}
+
+def getVersion(){
+    def commitHash = sh label: '', returnStdout: true, script: 'git rev-parse --short HEAD'
+    return commitHash
+}
