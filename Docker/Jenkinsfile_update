@@ -25,6 +25,18 @@ pipeline {
                   
             }
         }
+        stage('Docker push'){
+            steps {
+                 echo "${DOCKER_VERSION_TAG}"
+                 withCredentials([string(credentialsId: 'docker_pas', variable: 'dockerHab_pas')]) {
+                     sh "docker login -u tsv1982 -p ${dockerHab_pas}"
+                 }
+                // sh 'docker tag petclinic:latest tsv1982/petclinic:${DOCKER_VERSION_TAG}'
+                 sh 'docker push tsv1982/petclinic_01:${DOCKER_VERSION_TAG}'
+                 sh 'docker push tsv1982/petclinic_01:latest'
+                  
+            }
+        }        
         stage('ecs update'){
             steps {
               withCredentials([string(credentialsId: 'Access_key_ID', variable: 'AWS_ACCESS_KEY_ID'), string(credentialsId: 'Secret_access_key', variable: 
